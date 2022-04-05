@@ -1,48 +1,37 @@
 package ro.sd.a2.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import lombok.ToString;
+
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "`User`")
+@NoArgsConstructor
+@RequiredArgsConstructor
+@ToString
 public class User {
 
     @Id
     private String id;
 
     @Column
-    private String name;
+    @NonNull
+    private String email;
 
-    public User(String name) {
-        this.name=name;
-    }
+    @Column
+    @NonNull
+    private String password;
 
-    public User() {
-    }
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<UserMenu> menus;
 
-    public String getId() {
-        return id;
-    }
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private ReviewMenu reviewMenu;
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                '}';
-    }
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private ReviewRestaurant reviewRestaurant;
 }
