@@ -33,10 +33,12 @@ public class ReviewRestaurant {
 
     @ManyToOne
     @JoinColumn(name = "restaurant_id")
+    @NonNull
     private Restaurant restaurant;
 
     @OneToOne
     @JoinColumn(name = "user_id")
+    @NonNull
     private User user;
 
 }

@@ -27,11 +27,14 @@ public class User {
     private String password;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @NonNull
     private List<UserMenu> menus;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @NonNull
     private ReviewMenu reviewMenu;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @NonNull
     private ReviewRestaurant reviewRestaurant;
 }

@@ -24,6 +24,6 @@ public class UserMenu {
 
     @ManyToOne
     @JoinColumn(name = "menu_id")
-    @org.springframework.lang.NonNull
+    @NonNull
     private Menu menu;
 }

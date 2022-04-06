@@ -32,7 +32,16 @@ public class FirstController {
     @GetMapping("/login")
     public ModelAndView login(){
         ModelAndView mav = new ModelAndView();
+        User user = new User();
         mav.setViewName("login");
+        return mav;
+    }
+
+    @GetMapping("/register")
+    public ModelAndView register(){
+        ModelAndView mav = new ModelAndView();
+        User user = new User();
+        mav.setViewName("register");
         return mav;
     }
 
