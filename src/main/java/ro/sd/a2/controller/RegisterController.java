@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import ro.sd.a2.DTOs.RestaurantDTO;
 import ro.sd.a2.DTOs.UserDTO;
 import ro.sd.a2.entity.User;
 import ro.sd.a2.service.RestaurantService;
@@ -57,13 +58,15 @@ public class RegisterController {
     }
 
     @PostMapping("/registerUser")
-    public ModelAndView registerSubmit(@ModelAttribute UserDTO newUserDTO,
+    public ModelAndView registerSubmitUser(@ModelAttribute UserDTO newUserDTO,
                                        @RequestParam String confirmPass){
         ModelAndView mavSuccess = new ModelAndView("home");
         ModelAndView mavErrorEmail = new ModelAndView("errorEmail");
         ModelAndView mavErrorPass = new ModelAndView("errorPassword");
 
         String response = userService.createUser(newUserDTO, confirmPass);
+        if(restaurantService.findByEmail(newUserDTO.getEmail()) != null)
+            response = "-2"; // restaurant with given email found
         if (response.equals("-2")){
             System.out.println("Email already used.");
             return mavErrorEmail;
@@ -78,9 +81,43 @@ public class RegisterController {
     }
 
     @GetMapping("/registerUser")
-    public ModelAndView registerForm(){
+    public ModelAndView registerFormUser(){
         ModelAndView mav = new ModelAndView("registerUser");
         mav.addObject("newUserDTO", new UserDTO());
+        mav.addObject("confirmPass", new String());
+        return mav;
+    }
+
+    @PostMapping("/registerRestaurant")
+    public ModelAndView registerSubmitRestaurant(@ModelAttribute RestaurantDTO restaurantDTO,
+                                                 @RequestParam String confirmPass){
+        ModelAndView mavSuccess = new ModelAndView("home");
+        ModelAndView mavErrorEmail = new ModelAndView("errorEmail");
+        ModelAndView mavErrorPass = new ModelAndView("errorPassword");
+
+
+        String response = restaurantService.createRestaurant(restaurantDTO, confirmPass);
+
+        if(userService.findByEmail(restaurantDTO.getEmail()) != null)
+            response = "-2"; // user with given email found
+        if (response.equals("-2")){
+            System.out.println("Email already used.");
+            return mavErrorEmail;
+        }
+        else if(response.equals("-1")){
+            System.out.println("Passwords don't match");
+            return mavErrorPass;
+        }
+
+        System.out.println("Account created successfully!");
+        return  mavSuccess;
+
+    }
+
+    @GetMapping("/registerRestaurant")
+    public ModelAndView registerFormRestaurant(){
+        ModelAndView mav = new ModelAndView("registerRestaurant");
+        mav.addObject("newRestaurantDTO", new RestaurantDTO());
         mav.addObject("confirmPass", new String());
         return mav;
     }

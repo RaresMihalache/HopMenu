@@ -3,6 +3,7 @@ package ro.sd.a2.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ro.sd.a2.DTOs.RestaurantDTO;
 import ro.sd.a2.DTOs.UserDTO;
 import ro.sd.a2.entity.User;
 import ro.sd.a2.repository.UserRepository;
@@ -51,14 +52,14 @@ public class UserService {
     public String createUser(UserDTO newUserDTO, String confirmPassword){
         if(newUserDTO.getPassword().equals(confirmPassword) == false)
             return "-1"; // passwords don't match
-        UserDTO checkEmail = findByEmail(newUserDTO.getEmail());
-        if(checkEmail == null){
+        UserDTO checkEmailUsers = findByEmail(newUserDTO.getEmail());
+        if(checkEmailUsers == null){
             User newUser = new User();
             newUser = newUser.convertFromUserDTOToUser(newUserDTO);
             userRepository.save(newUser);
             return "1"; // success -> account created successfully
         }
-        return "-2"; // user with given email found
+        return "-2"; // user/restaurant with given email found
     }
 
 }
