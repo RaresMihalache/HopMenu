@@ -1,9 +1,6 @@
 package ro.sd.a2.entity;
 
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -11,10 +8,12 @@ import javax.persistence.*;
 @Table(name = "User_menu")
 @NoArgsConstructor
 @RequiredArgsConstructor
-@ToString
+@Data
 public class UserMenu {
 
     @Id
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
     private String id;
 
     @ManyToOne

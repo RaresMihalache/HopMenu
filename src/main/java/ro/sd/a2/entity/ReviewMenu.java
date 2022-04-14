@@ -1,9 +1,6 @@
 package ro.sd.a2.entity;
 
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -12,10 +9,12 @@ import java.time.LocalDate;
 @Table(name = "Review_menu")
 @NoArgsConstructor
 @RequiredArgsConstructor
-@ToString
+@Data
 public class ReviewMenu {
 
     @Id
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
     private String id;
 
     @Column
