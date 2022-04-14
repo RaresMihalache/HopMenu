@@ -58,23 +58,22 @@ public class UserController {
     public ModelAndView registerSubmit(@ModelAttribute UserDTO newUserDTO,
                                        @RequestParam String confirmPass){
         ModelAndView mavSuccess = new ModelAndView("home");
-        ModelAndView mavError = new ModelAndView("error");
-        
+        ModelAndView mavErrorEmail = new ModelAndView("errorEmail");
+        ModelAndView mavErrorPass = new ModelAndView("errorPassword");
+
         String response = userService.createUser(newUserDTO, confirmPass);
         if (response.equals("-2")){
             System.out.println("Email already used.");
-            return mavError;
+            return mavErrorEmail;
         }
         else if(response.equals("-1")){
             System.out.println("Passwords don't match");
-            return mavError;
+            return mavErrorPass;
         }
 
         System.out.println("Account created successfully!");
         return  mavSuccess;
     }
-
-
 
     @GetMapping("/register")
     public ModelAndView registerForm(){
