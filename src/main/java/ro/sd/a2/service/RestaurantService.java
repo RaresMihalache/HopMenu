@@ -9,9 +9,19 @@ import ro.sd.a2.repository.RestaurantRepository;
 
 @Service
 public class RestaurantService {
-    
+
     @Autowired
     private RestaurantRepository restaurantRepository;
+
+
+    public int login(String email, String password){
+        Restaurant restaurant = restaurantRepository.findByEmailAndPassword(email, password);
+        if(restaurant != null){
+            System.out.println("Welcome restaurant: " + restaurant.getName());
+            return 1;
+        }
+        return -1;
+    }
 
     public RestaurantDTO findByEmail(String email){
         RestaurantDTO restaurantDTO = new RestaurantDTO();

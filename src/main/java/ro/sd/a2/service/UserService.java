@@ -18,10 +18,6 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public List<User> getAllUsers() {
-        return new ArrayList<>();
-    }
-
 
     public int login(String email, String password) {
         User user = userRepository.findByEmailAndPassword(email, password);
@@ -32,6 +28,7 @@ public class UserService {
         return -1;
     }
 
+
     public UserDTO findByEmail(String email){
         UserDTO userDTO = new UserDTO();
         User user = userRepository.findByEmail(email);
@@ -40,13 +37,6 @@ public class UserService {
             return userDTO;
         }
         return null;
-    }
-
-    public String createUser(UserDTO newUserDTO){
-        User newUser = new User();
-        newUser = newUser.convertFromUserDTOToUser(newUserDTO);
-        userRepository.save(newUser);
-        return newUser.getId();
     }
 
     public String createUser(UserDTO newUserDTO, String confirmPassword){

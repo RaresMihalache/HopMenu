@@ -8,4 +8,6 @@ import ro.sd.a2.entity.Restaurant;
 public interface RestaurantRepository extends JpaRepository<Restaurant, String> {
 
     Restaurant findByEmail(String email);
+
+    Restaurant findByEmailAndPassword(String email, String password);
 }
